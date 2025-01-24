@@ -4,6 +4,7 @@ import 'package:todo_example/const/colors.dart';
 import 'package:todo_example/provider/taskProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_example/screen/makeTask.dart';
+import 'package:todo_example/screen/searchTask.dart';
 
 class Homescreen extends StatelessWidget {
   const Homescreen({super.key});
@@ -27,16 +28,14 @@ class Homescreen extends StatelessWidget {
         ),
         title: const Text(
           'To-Do List Example',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.w600,
-            fontSize: 20.0,
-          ),
+          style: S20W600_BLACK,
         ),
         actions: [
           IconButton(
             onPressed: () {
-              print("Search Button Clicked");
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => Searchtask()),
+              );
             },
             icon: const Icon(Icons.search),
           ),
@@ -57,11 +56,7 @@ class Homescreen extends StatelessWidget {
               padding: EdgeInsets.all(20.0),
               child: Text(
                 'Category',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 20.0,
-                ),
+                style: S20W600_BLACK,
               ),
             ),
             ListTile(
@@ -113,9 +108,7 @@ class Homescreen extends StatelessWidget {
                   padding: const EdgeInsets.all(10.0),
                   child: Text(
                     '  Add Today\'s plan',
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                    ),
+                    style: S14W500_GREY_600,
                   ),
                 ),
               ),

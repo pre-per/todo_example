@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_example/const/colors.dart';
 import 'package:todo_example/provider/taskProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_example/model/taskModel.dart';
@@ -23,11 +24,7 @@ class ListCard extends StatelessWidget {
         child: const Center(
           child: Text(
             '오른쪽으로 밀어서 삭제',
-            style: TextStyle(
-              fontSize: 20.0,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-            ),
+            style: S20W600_WHITE,
           ),
         ),
       ),
@@ -66,11 +63,7 @@ class ListCard extends StatelessWidget {
                       ),
                       const Text(
                         '완료 시 체크',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 12.0,
-                          color: Colors.brown,
-                        ),
+                        style: S12W600_BROWN,
                       ),
                     ],
                   ),
@@ -80,18 +73,11 @@ class ListCard extends StatelessWidget {
                     children: [
                       Text(
                         task.title,
-                        style: const TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: S20W600_BLACK,
                       ),
                       Text(
                         task.date.toString().split(' ')[0],
-                        style: const TextStyle(
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.grey,
-                        ),
+                        style: S15W500_GREY,
                       ),
                     ],
                   ),

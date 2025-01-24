@@ -17,10 +17,7 @@ class Detailtask extends StatelessWidget {
         backgroundColor: BACKGROUND_COLOR,
         title: Text(
           'Detail Task',
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 20.0,
-          ),
+          style: S20W600_BLACK,
         ),
         centerTitle: true,
       ),
@@ -29,59 +26,53 @@ class Detailtask extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 100.0,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Center(
-                child: Text(
-                  task.title,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 10.0),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 100.0,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Center(
-                child: Text(
-                  task.date.toString().split(' ')[0],
-                  style: TextStyle(
-                    fontSize: 18.0,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 10.0),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 100.0,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Center(
-                child: Text(
-                  task.description,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                  ),
-                ),
-              ),
-            ),
+            RenderDetailTask(name: '제목', content: task.title),
+            RenderDetailTask(name: '날짜', content: task.date.toString().split(' ')[0]),
+            RenderDetailTask(name: '내용', content: task.description),
           ],
         ),
       ),
+    );
+  }
+}
+
+class RenderDetailTask extends StatelessWidget {
+  final String name;
+  final String content;
+
+  const RenderDetailTask({
+    required this.name,
+    required this.content,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          ' $name',
+          style: S20W600_BLACK,
+        ),
+        const SizedBox(height: 5.0),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: 80.0,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Text(
+              content,
+              style: S20W500_BLACK,
+            ),
+          ),
+        ),
+        const SizedBox(height: 10.0),
+      ],
     );
   }
 }
