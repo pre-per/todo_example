@@ -35,7 +35,7 @@ class _MakelistState extends State<Makelist> {
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
           backgroundColor: BACKGROUND_COLOR,
-          title: const Text(
+          title: Text(
             'New To-do Plan',
             style: S20W600_BLACK,
           ),
@@ -69,7 +69,7 @@ class _MakelistState extends State<Makelist> {
                   },
                 ),
                 const SizedBox(height: 10.0),
-                const Text(
+                Text(
                   '날짜',
                   style: S18W600_BLACK,
                 ),
@@ -80,29 +80,27 @@ class _MakelistState extends State<Makelist> {
                         context: context,
                         firstDate: DateTime.utc(2000, 1, 1),
                         lastDate: DateTime.utc(2100, 1, 1));
-                    print('selected Date: $selectedDate');
                     setState(() {
                       _task.date = selectedDate ?? DateTime.now();
                     });
-                    print("_task.date: ${_task.date}");
                   },
                   child: Container(
                     height: 50.0,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
-                      color: Colors.green[400],
+                      color: Colors.brown[400],
                     ),
                     child: Center(
                       child: Text(
                         _task.date.toString().split(' ')[0],
-                        style: S18W600_BLACK,
+                        style: S18W600_WHITE,
                       ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 10.0),
-                const Text(
+                Text(
                   '내용',
                   style: S18W600_BLACK,
                 ),
@@ -138,7 +136,7 @@ class _MakelistState extends State<Makelist> {
                       height: 80.0,
                       width: MediaQuery.of(context).size.width * 0.4,
                       color: Colors.transparent,
-                      child: const Center(
+                      child: Center(
                         child: Text(
                           '취소',
                           style: S21W600_BLACK,

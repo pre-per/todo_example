@@ -21,7 +21,7 @@ class ListCard extends StatelessWidget {
       direction: DismissDirection.startToEnd,
       background: Container(
         color: Colors.red[400],
-        child: const Center(
+        child: Center(
           child: Text(
             '오른쪽으로 밀어서 삭제',
             style: S20W600_WHITE,
@@ -61,25 +61,28 @@ class ListCard extends StatelessWidget {
                           taskProvider.toggleCheck(task);
                         },
                       ),
-                      const Text(
+                      Text(
                         '완료 시 체크',
                         style: S12W600_BROWN,
                       ),
                     ],
                   ),
                   const SizedBox(width: 20.0),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        task.title,
-                        style: S20W600_BLACK,
-                      ),
-                      Text(
-                        task.date.toString().split(' ')[0],
-                        style: S15W500_GREY,
-                      ),
-                    ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          task.title,
+                          style: S20W600_BLACK,
+                          softWrap: true,
+                        ),
+                        Text(
+                          task.date.toString().split(' ')[0],
+                          style: S15W500_GREY,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

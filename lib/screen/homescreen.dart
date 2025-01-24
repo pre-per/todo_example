@@ -26,7 +26,7 @@ class Homescreen extends StatelessWidget {
             );
           },
         ),
-        title: const Text(
+        title: Text(
           'To-Do List Example',
           style: S20W600_BLACK,
         ),
@@ -52,8 +52,8 @@ class Homescreen extends StatelessWidget {
         backgroundColor: BACKGROUND_COLOR,
         child: ListView(
           children: [
-            const Padding(
-              padding: EdgeInsets.all(20.0),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
               child: Text(
                 'Category',
                 style: S20W600_BLACK,

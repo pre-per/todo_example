@@ -49,6 +49,7 @@ class Searchtask extends StatelessWidget {
                             RenderFilterButton(text: 'yesterday'),
                             RenderFilterButton(text: '2 days left'),
                             RenderFilterButton(text: 'next week'),
+
                           ],
                         ),
                       ),
@@ -88,7 +89,7 @@ class _RenderFilterButtonState extends State<RenderFilterButton> {
       child: Padding(
         padding: const EdgeInsets.only(left: 10.0, top: 20.0),
         child: AnimatedContainer(
-          duration: Duration(microseconds: 1000),
+          duration: Duration(microseconds: 200),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16.0),
               color: Colors.white,
