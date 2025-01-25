@@ -49,7 +49,34 @@ class Searchtask extends StatelessWidget {
                             RenderFilterButton(text: 'yesterday'),
                             RenderFilterButton(text: '2 days left'),
                             RenderFilterButton(text: 'next week'),
-
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10.0),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('검색 기록', style: S14W500_GREY_600),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            RenderFilterButton(text: 'done'),
+                            RenderFilterButton(text: 'tomorrow'),
+                            RenderFilterButton(text: 'yesterday'),
+                            RenderFilterButton(text: '2 days left'),
+                            RenderFilterButton(text: 'next week'),
                           ],
                         ),
                       ),
@@ -66,6 +93,63 @@ class Searchtask extends StatelessWidget {
   }
 }
 
+
+// About History
+class RenderHistoryButton extends StatefulWidget {
+  final String text;
+
+  const RenderHistoryButton({required this.text, super.key});
+
+  @override
+  State<RenderHistoryButton> createState() => _RenderHistoryButtonState();
+}
+
+class _RenderHistoryButtonState extends State<RenderHistoryButton> {
+  bool isClicked = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          isClicked = !isClicked;
+        });
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10.0, top: 20.0),
+        child: AnimatedContainer(
+          duration: Duration(microseconds: 200),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16.0),
+              color: Colors.white,
+              border: Border.all(
+                  color: isClicked ? Colors.blue : Colors.black, width: 0.5)),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              children: [
+                Text(widget.text,
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      color: isClicked ? Colors.blue : Colors.black,
+                    )),
+                GestureDetector(
+                  onTap: () {
+                    print("deleted clicked");
+                  },
+                  child: Icon(Icons.close, size: 15.0,),
+                  // 수정 요망
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// About Filter
 class RenderFilterButton extends StatefulWidget {
   final String text;
 
