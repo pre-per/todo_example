@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_example/const/colors.dart';
+import 'package:todo_example/provider/searchProvider.dart';
 
 class Searchtask extends StatelessWidget {
   const Searchtask({super.key});
@@ -72,11 +73,11 @@ class Searchtask extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           children: [
-                            RenderFilterButton(text: 'done'),
-                            RenderFilterButton(text: 'tomorrow'),
-                            RenderFilterButton(text: 'yesterday'),
-                            RenderFilterButton(text: '2 days left'),
-                            RenderFilterButton(text: 'next week'),
+                            RenderHistoryButton(text: 'done'),
+                            RenderHistoryButton(text: 'tomorrow'),
+                            RenderHistoryButton(text: 'yesterday'),
+                            RenderHistoryButton(text: '2 days left'),
+                            RenderHistoryButton(text: 'next week'),
                           ],
                         ),
                       ),
@@ -105,6 +106,7 @@ class RenderHistoryButton extends StatefulWidget {
 }
 
 class _RenderHistoryButtonState extends State<RenderHistoryButton> {
+  final SearchProvider _searchProvider = SearchProvider();
   bool isClicked = false;
 
   @override
@@ -121,24 +123,25 @@ class _RenderHistoryButtonState extends State<RenderHistoryButton> {
           duration: Duration(microseconds: 200),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16.0),
-              color: Colors.white,
-              border: Border.all(
-                  color: isClicked ? Colors.blue : Colors.black, width: 0.5)),
+              color: Colors.grey[100],
+              /* border: Border.all(
+                  color: Colors.black, width: 0.5)*/ ),
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Row(
               children: [
-                Text(widget.text,
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      color: isClicked ? Colors.blue : Colors.black,
-                    )),
+                Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Text(widget.text,
+                      style: S14W500_BLACK),
+                ),
+                const SizedBox(width: 5.0),
                 GestureDetector(
                   onTap: () {
-                    print("deleted clicked");
+                    _searchProvider.removeSearchHistory(widget.text);
+                    print("${widget.text} deleted");
                   },
                   child: Icon(Icons.close, size: 15.0,),
-                  // 수정 요망
                 ),
               ],
             ),
