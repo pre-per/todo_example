@@ -1,6 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_example/const/colors.dart';
+import 'package:todo_example/model/historyModel.dart';
 import 'package:todo_example/provider/searchProvider.dart';
+import 'package:uuid/uuid.dart';
 
 class Searchtask extends StatelessWidget {
   const Searchtask({super.key});
@@ -8,6 +13,7 @@ class Searchtask extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextEditingController _controller = TextEditingController();
+    final SearchProvider _searchProvider = Provider.of<SearchProvider>(context);
 
     return GestureDetector(
       onTap: () {
@@ -59,6 +65,8 @@ class Searchtask extends StatelessWidget {
               ),
               const SizedBox(height: 10.0),
               Container(
+                height: 120.0,
+                width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10.0),
@@ -69,16 +77,15 @@ class Searchtask extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('검색 기록', style: S14W500_GREY_600),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            RenderHistoryButton(text: 'done'),
-                            RenderHistoryButton(text: 'tomorrow'),
-                            RenderHistoryButton(text: 'yesterday'),
-                            RenderHistoryButton(text: '2 days left'),
-                            RenderHistoryButton(text: 'next week'),
-                          ],
+                      Expanded(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (content, index) {
+                            return RenderHistoryButton(
+                                history: _searchProvider.searchData[index]);
+                          },
+                          itemCount: _searchProvider.searchData.length,
                         ),
                       ),
                     ],
@@ -89,59 +96,69 @@ class Searchtask extends StatelessWidget {
             ],
           ),
         ),
+        bottomNavigationBar: BottomAppBar(
+          height: MediaQuery.of(context).viewInsets.bottom + 100.0,
+          child: Column(
+            children: [
+              SizedBox(height: 10.0),
+              GestureDetector(
+                onTap: () {
+                  _searchProvider.addSearchHistory(History(
+                    id: Uuid().v4(),
+                    content: 'Hello world #${Random().nextInt(100)}',
+                    date: DateTime.now(),
+                  ));
+                  print("+1 clicked");
+                },
+                child: Icon(Icons.plus_one),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 }
 
-
 // About History
-class RenderHistoryButton extends StatefulWidget {
-  final String text;
+class RenderHistoryButton extends StatelessWidget {
+  final History history;
 
-  const RenderHistoryButton({required this.text, super.key});
-
-  @override
-  State<RenderHistoryButton> createState() => _RenderHistoryButtonState();
-}
-
-class _RenderHistoryButtonState extends State<RenderHistoryButton> {
-  final SearchProvider _searchProvider = SearchProvider();
-  bool isClicked = false;
+  const RenderHistoryButton({required this.history, super.key});
 
   @override
   Widget build(BuildContext context) {
+    final SearchProvider searchProvider = Provider.of<SearchProvider>(context);
     return GestureDetector(
       onTap: () {
-        setState(() {
-          isClicked = !isClicked;
-        });
+        print("search button clicked");
       },
       child: Padding(
         padding: const EdgeInsets.only(left: 10.0, top: 20.0),
         child: AnimatedContainer(
           duration: Duration(microseconds: 200),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16.0),
-              color: Colors.grey[100],
-              /* border: Border.all(
-                  color: Colors.black, width: 0.5)*/ ),
+            borderRadius: BorderRadius.circular(16.0),
+            color: Colors.grey[100],
+          ),
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Row(
               children: [
                 Padding(
                   padding: const EdgeInsets.all(2.0),
-                  child: Text(widget.text,
-                      style: S14W500_BLACK),
+                  child: Text(history.content, style: S14W500_BLACK),
                 ),
                 const SizedBox(width: 5.0),
                 GestureDetector(
                   onTap: () {
-                    _searchProvider.removeSearchHistory(widget.text);
-                    print("${widget.text} deleted");
+                    searchProvider.removeSearchHistory(history.id);
+                    print("${history.content} deleted");
                   },
-                  child: Icon(Icons.close, size: 15.0,),
+                  child: Icon(
+                    Icons.close,
+                    size: 15.0,
+                  ),
                 ),
               ],
             ),

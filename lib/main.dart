@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_example/provider/taskProvider.dart';
+import 'package:todo_example/provider/searchProvider.dart';
 import 'package:todo_example/screen/homescreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -13,6 +14,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => TaskProvider()..listenToTasks()),
+        ChangeNotifierProvider(create: (_) => SearchProvider()..listenToHistory()),
       ],
       child: MyApp(),
     ),
