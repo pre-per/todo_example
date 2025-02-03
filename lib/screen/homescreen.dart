@@ -145,3 +145,21 @@ class Homescreen extends StatelessWidget {
     );
   }
 }
+
+class RenderListBuilder extends StatelessWidget {
+  final TaskProvider taskProvider;
+
+  const RenderListBuilder({required this.taskProvider, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Builder(
+      builder: (context) => ListView.builder(
+        itemBuilder: (context, index) {
+          return ListCard(task: taskProvider.tasks[index]);
+        },
+        itemCount: taskProvider.tasks.length,
+      ),
+    );
+  }
+}

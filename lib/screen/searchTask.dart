@@ -198,13 +198,15 @@ class _RenderFilterButtonState extends State<RenderFilterButton> {
               borderRadius: BorderRadius.circular(16.0),
               color: Colors.white,
               border: Border.all(
-                  color: isClicked ? Colors.blue : Colors.black, width: 0.5)),
+                  color: isClicked ? Colors.blue[700]! : Colors.grey[700]!,
+                  width: isClicked ? 1.2 : 0.8)),
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(widget.text,
                 style: TextStyle(
                   fontSize: 14.0,
-                  color: isClicked ? Colors.blue : Colors.black,
+                  fontWeight: isClicked ? FontWeight.w600 : FontWeight.w500,
+                  color: isClicked ? Colors.blue[700]! : Colors.grey[700]!,
                 )),
           ),
         ),

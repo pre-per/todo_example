@@ -32,7 +32,10 @@ class ListCard extends StatelessWidget {
         taskProvider.removeTask(task.id);
 
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Deleted')),
+          const SnackBar(
+            content: Text('Deleted'),
+            behavior: SnackBarBehavior.floating,
+          ),
         );
       },
       child: GestureDetector(
@@ -56,7 +59,7 @@ class ListCard extends StatelessWidget {
                     children: [
                       Checkbox(
                         value: task.isChecked,
-                        activeColor: Colors.brown,
+                        activeColor: Colors.brown[400],
                         onChanged: (newBool) {
                           taskProvider.toggleCheck(task);
                         },

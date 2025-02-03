@@ -89,12 +89,12 @@ class _MakelistState extends State<Makelist> {
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
-                      color: Colors.brown[400],
+                      color: Colors.amber,
                     ),
                     child: Center(
                       child: Text(
                         _task.date.toString().split(' ')[0],
-                        style: S18W600_WHITE,
+                        style: S18W600_BLACK,
                       ),
                     ),
                   ),
@@ -126,7 +126,7 @@ class _MakelistState extends State<Makelist> {
             color: BACKGROUND_COLOR,
             child: Center(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
                     onTap: () {
@@ -134,7 +134,7 @@ class _MakelistState extends State<Makelist> {
                     },
                     child: Container(
                       height: 80.0,
-                      width: MediaQuery.of(context).size.width * 0.4,
+                      width: MediaQuery.of(context).size.width * 0.3,
                       color: Colors.transparent,
                       child: Center(
                         child: Text(
@@ -154,15 +154,16 @@ class _MakelistState extends State<Makelist> {
                     },
                     child: Container(
                       height: 80.0,
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      color: Colors.transparent,
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      decoration: BoxDecoration(
+                        color: Colors.amber,
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
                       child: Center(
                         child: Text(
-                          '저장',
+                          '할 일 저장하기',
                           style: TextStyle(
-                            color: (_formKey.currentState?.validate() ?? false)
-                                ? Colors.black
-                                : Colors.grey[600],
+                            color: Colors.black,
                             fontSize: 21.0,
                             fontWeight: FontWeight.w600,
                           ),

@@ -11,7 +11,6 @@ class History {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'content': content,
       'date': date.toIso8601String(),
     };
