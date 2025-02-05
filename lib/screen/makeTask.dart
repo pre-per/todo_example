@@ -5,27 +5,21 @@ import 'package:provider/provider.dart';
 import 'package:todo_example/model/taskModel.dart';
 import 'package:uuid/uuid.dart';
 
-class Makelist extends StatefulWidget {
+class Makelist extends StatelessWidget {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  Task task = Task(
+    id: const Uuid().v4(),
+    title: 'Empty Title',
+    date: DateTime.now(),
+    category: 'no category',
+    checkTodo: [],
+  );
 
   Makelist({super.key});
 
   @override
-  State<Makelist> createState() => _MakelistState();
-}
-
-class _MakelistState extends State<Makelist> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  Task _task = Task(
-    id: const Uuid().v4(),
-    title: 'Empty Title',
-    date: DateTime.now(),
-    description: 'Empty Description',
-  );
-
-  @override
   Widget build(BuildContext context) {
     final taskProvider = Provider.of<TaskProvider>(context);
-
 
     return GestureDetector(
       onTap: () {
@@ -50,29 +44,54 @@ class _MakelistState extends State<Makelist> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  '제목',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w600,
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.0),
+                    border: Border.all(width: 0.1, color: Colors.grey),
+                    color: Colors.white,
                   ),
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: '제목을 입력하세요',
+                  child: Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          decoration: const InputDecoration(
+                            hintText: '제목',
+                            hintStyle: S20W600_GREY,
+                            border: InputBorder.none,
+                          ),
+                          onChanged: (String? value) {
+                            task.title = value ?? 'Empty Title';
+                          },
+                          validator: (String? value) {
+                            return (value == null) ? '값을 입력하세요' : null;
+                          },
+                        ),
+                        /* ListView.builder(
+                          itemCount: taskProvider.tasks.length,
+                          itemBuilder: (context, index) {
+                            return RenderTodoTextFormField(task: taskProvider.tasks[index]);
+                          },
+                        ), */
+                        SizedBox(height: 10.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                                onPressed: () {},
+                                icon: Icon(Icons.check_circle_outline,
+                                    color: Colors.grey)),
+                            IconButton(
+                                onPressed: () {},
+                                icon: Icon(Icons.photo_camera_back,
+                                    color: Colors.grey)),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
-                  onSaved: (String? value) {
-                    _task.title = value ?? 'Empty Title';
-                  },
-                  validator: (String? value) {
-                    return (value == null) ? '값을 입력하세요' : null;
-                  },
                 ),
                 const SizedBox(height: 10.0),
-                Text(
-                  '날짜',
-                  style: S18W600_BLACK,
-                ),
                 const SizedBox(height: 5.0),
                 GestureDetector(
                   onTap: () async {
@@ -80,9 +99,7 @@ class _MakelistState extends State<Makelist> {
                         context: context,
                         firstDate: DateTime.utc(2000, 1, 1),
                         lastDate: DateTime.utc(2100, 1, 1));
-                    setState(() {
-                      _task.date = selectedDate ?? DateTime.now();
-                    });
+                    task.date = selectedDate ?? DateTime.now();
                   },
                   child: Container(
                     height: 50.0,
@@ -93,27 +110,26 @@ class _MakelistState extends State<Makelist> {
                     ),
                     child: Center(
                       child: Text(
-                        _task.date.toString().split(' ')[0],
+                        task.date.toString().split(' ')[0],
                         style: S18W600_BLACK,
                       ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 10.0),
-                Text(
-                  '내용',
-                  style: S18W600_BLACK,
+                GestureDetector(
+                  onTap: () {},
+                  child: RenderTaskListTile(icon: Icons.calendar_month, text: '시간'),
                 ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: '내용을 입력하세요',
-                  ),
-                  onSaved: (String? value) {
-                    _task.description = value ?? 'Empty Description';
-                  },
-                  validator: (String? value) {
-                    return (value == null) ? '값을 입력하세요' : null;
-                  },
+                const SizedBox(height: 10.0),
+                GestureDetector(
+                  onTap: () {},
+                  child: RenderTaskListTile(icon: Icons.place, text: '장소'),
+                ),
+                const SizedBox(height: 10.0),
+                GestureDetector(
+                  onTap: () {},
+                  child: RenderTaskListTile(icon: Icons.notifications, text: '카테고리 설정'),
                 ),
               ],
             ),
@@ -121,7 +137,7 @@ class _MakelistState extends State<Makelist> {
         ),
         bottomNavigationBar: Padding(
           padding:
-          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: BottomAppBar(
             color: BACKGROUND_COLOR,
             child: Center(
@@ -148,7 +164,7 @@ class _MakelistState extends State<Makelist> {
                     onTap: () {
                       if (_formKey.currentState?.validate() ?? false) {
                         _formKey.currentState?.save();
-                        taskProvider.addTask(_task);
+                        taskProvider.addTask(task);
                         Navigator.pop(context);
                       }
                     },
@@ -177,6 +193,53 @@ class _MakelistState extends State<Makelist> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class RenderTaskListTile extends StatelessWidget {
+  IconData icon;
+  String text;
+
+  RenderTaskListTile({required this.icon, required this.text, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15.0),
+        color: Colors.white,
+        border: Border.all(width: 0.1, color: Colors.grey),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: Center(
+          child: Row(
+            children: [
+              const SizedBox(width: 10.0),
+              Icon(icon, color: Colors.grey),
+              const SizedBox(width: 30.0),
+              Text(text, style: S20W600_GREY),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+class RenderTodoTextFormField extends StatelessWidget {
+  Task task;
+
+  RenderTodoTextFormField({required this.task, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 50.0,
+      height: 50.0,
+      color: Colors.red,
     );
   }
 }

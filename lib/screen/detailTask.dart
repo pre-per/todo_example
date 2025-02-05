@@ -28,7 +28,6 @@ class Detailtask extends StatelessWidget {
           children: [
             RenderDetailTask(name: '제목', content: task.title),
             RenderDetailTask(name: '날짜', content: task.date.toString().split(' ')[0]),
-            RenderDetailTask(name: '내용', content: task.description),
           ],
         ),
       ),
