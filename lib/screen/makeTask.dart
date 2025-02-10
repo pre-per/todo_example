@@ -3,6 +3,7 @@ import 'package:todo_example/const/colors.dart';
 import 'package:todo_example/provider/taskProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_example/model/taskModel.dart';
+import 'package:todo_example/screen/categorySetting.dart';
 import 'package:uuid/uuid.dart';
 
 class Makelist extends StatelessWidget {
@@ -12,7 +13,6 @@ class Makelist extends StatelessWidget {
     title: 'Empty Title',
     date: DateTime.now(),
     category: 'no category',
-    checkTodo: [],
   );
 
   Makelist({super.key});
@@ -67,12 +67,6 @@ class Makelist extends StatelessWidget {
                             return (value == null) ? '값을 입력하세요' : null;
                           },
                         ),
-                        /* ListView.builder(
-                          itemCount: taskProvider.tasks.length,
-                          itemBuilder: (context, index) {
-                            return RenderTodoTextFormField(task: taskProvider.tasks[index]);
-                          },
-                        ), */
                         SizedBox(height: 10.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -91,8 +85,7 @@ class Makelist extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 10.0),
-                const SizedBox(height: 5.0),
+                const SizedBox(height: 15.0),
                 GestureDetector(
                   onTap: () async {
                     DateTime? selectedDate = await showDatePicker(
@@ -116,7 +109,7 @@ class Makelist extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 10.0),
+                const SizedBox(height: 15.0),
                 GestureDetector(
                   onTap: () {},
                   child: RenderTaskListTile(icon: Icons.calendar_month, text: '시간'),
@@ -128,7 +121,11 @@ class Makelist extends StatelessWidget {
                 ),
                 const SizedBox(height: 10.0),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => Categorysetting())
+                    );
+                  },
                   child: RenderTaskListTile(icon: Icons.notifications, text: '카테고리 설정'),
                 ),
               ],

@@ -3,7 +3,6 @@ class Task {
   String title;
   DateTime date;
   String category;
-  List<String> checkTodo;
   bool isChecked;
 
   Task({
@@ -11,7 +10,6 @@ class Task {
     required this.title,
     required this.date,
     required this.category,
-    required this.checkTodo,
     this.isChecked = false,
   });
 
@@ -20,7 +18,6 @@ class Task {
       'title': title,
       'date': date.toIso8601String(),
       'isChecked': isChecked,
-      'checkTodo': checkTodo,
       'category': category,
     };
   }
@@ -32,7 +29,6 @@ class Task {
       date: DateTime.parse(map['date']),
       isChecked: map['isChecked'] ?? false,
       category: map['category'] ?? 'no category',
-      checkTodo: map['checkTodo'] ?? [],
     );
   }
 }
